@@ -7,6 +7,7 @@ import Home from './pages/Home';
 
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import ImgDropAndCrop from './components/ImgDropAndCrop';
+import Zone from './pages/Zone';
 
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
       <Routes>
         <Route exact path = "/" element={<Home/>}/>
         <Route exact path = "/upload" element={<Upload/>}/>
-        <Route exact path = "/zone" element={<ImgDropAndCrop/>}/>
+        <Route exact path = "/zone" element={<Zone/>}/>
       </Routes>
     </Router>
 

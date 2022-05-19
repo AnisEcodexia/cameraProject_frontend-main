@@ -9,7 +9,7 @@ function Upload() {
   return (
     <div className="App">
         <Navbar/>
-        <Title/>
+        
         <UploadForm/>
         
   </div>

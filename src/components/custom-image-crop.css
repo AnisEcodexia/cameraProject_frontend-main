@@ -181,3 +181,9 @@
   /* Just so it's visible */
 }
 .rowC{display:flex; flex-direction:row;}
+.player-wrapper {
+  position: relative;
+  padding-top: 0.25% /* Player ratio: 100 / (1280 / 720) */;
+  
+}
+
