@@ -1,15 +1,16 @@
 import React, { useRef ,useState } from "react";
-import ReactPlayer from "react-player";
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Form from 'react-bootstrap/Form'
 import { FormControl } from "react-bootstrap";
-
-
+import { useSelector, useDispatch } from 'react-redux'
+import { uploadImage } from '../features/counter/counterSlice'
+import { setImgName } from '../features/counter/counterSlice'
 
 
 
 const UploadForm = () => {
+  const dispatch = useDispatch()
   const [label, setLabel] = useState("");
   const [description, setDescription] = useState("");
   const [floor, setFloor] = useState("");
@@ -23,6 +24,7 @@ const UploadForm = () => {
   const videoRef = useRef();
 
   const capture = () => {
+
           canvasRef.current.width = videoRef.current.videoWidth;
           canvasRef.current.height = videoRef.current.videoHeight;
           canvasRef.current
@@ -40,8 +42,9 @@ const UploadForm = () => {
             0,
             0,
             videoRef.current.videoWidth,
-            videoRef.current.videoHeight
-          );
+            videoRef.current.videoHeight)
+
+          dispatch(uploadImage(document.getElementsByName("mainPhoto")[0].toDataURL()));
           console.log("dataUrl", newCanvas.toDataURL());
         
       
@@ -72,15 +75,16 @@ const UploadForm = () => {
     const handleSubmit = (e) => {
       e.preventDefault();
     const formData = new FormData();
-    formData.append("file", file, file.name);
+    formData.append("filename",file.name);
     formData.append("label", document.getElementsByName("label")[0].value);
     formData.append("desc", document.getElementsByName("desc")[0].value);
     formData.append("floor", document.getElementsByName("floor")[0].value);
     formData.append("section", document.getElementsByName("section")[0].value);
-    formData.append("mainPhoto", document.getElementsByName("mainPhoto")[0].toDataURL());
+    formData.append("image", document.getElementsByName("mainPhoto")[0].toDataURL());
+    dispatch(setImgName(file.name));
     
     for (var pair of formData.entries()) {
-      console.log(pair[0]+ ', ' + pair[1]); 
+      console.log(pair[0]+ ':' + pair[1]); 
   } 
     const requestOptions = {
       method: "POST",
@@ -109,7 +113,7 @@ const UploadForm = () => {
         <div className="rowC">
           <div>
             <div className='player-wrapper'>
-            <video url={videoFilePath} src={videoFilePath} ref={videoRef} controls style={{width: '640px',height: '360px'}}/>
+            <video autoPlay loop url={videoFilePath} src={videoFilePath} ref={videoRef} controls style={{width: '640px',height: '360px'}}/>
             
             </div>
             <canvas name="mainPhoto" id="canvas" ref={canvasRef} style={{ width: '640px',height: '360px' ,overflow: "auto" }}></canvas>
@@ -203,9 +207,6 @@ const UploadForm = () => {
             <div>
               <Button onClick={handleSubmit} type="submit"> Submit </Button>
               <Button onClick={capture} > Zone </Button>
-              
-      
-              
             </div>
           </div>
         </div>

@@ -6,7 +6,7 @@ import Upload from './pages/Upload';
 import Home from './pages/Home';
 
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import ImgDropAndCrop from './components/ImgDropAndCrop';
+
 import Zone from './pages/Zone';
 
 
